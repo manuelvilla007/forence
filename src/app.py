@@ -311,4 +311,9 @@ def sales_projection():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        # Crear usuario por defecto si no existe
+        if not User.query.filter_by(username='admin').first():
+            default_user = User(username='admin', password='password')
+            db.session.add(default_user)
+            db.session.commit()
     app.run(debug=True)
